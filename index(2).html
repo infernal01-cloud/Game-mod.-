@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101522">
+  <meta name="description" content="Game Mod: descubre mods, guías y novedades para tus videojuegos favoritos.">
+  <title>Game Mod | Mods, guías y gaming</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: #121a2d;
+      --panel-2: #18233a;
+      --text: #f5f7ff;
+      --muted: #aab5ce;
+      --accent: #7778ff;
+      --accent-2: #39d8c5;
+      --line: rgba(255,255,255,.10);
+      --radius: 18px;
+      --max: 1100px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(ellipse at 80% 0%, rgba(92,92,255,.16), transparent 35%), var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+    .wrap { width: min(var(--max), calc(100% - 32px)); margin-inline: auto; }
+    header {
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(11,16,32,.88); backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav { min-height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 900; letter-spacing: .08em; }
+    .logo {
+      width: 42px; height: 42px; border-radius: 13px; display: grid; place-items: center;
+      background: linear-gradient(135deg, var(--accent), #4b4de0); font-size: 22px;
+      box-shadow: 0 8px 26px rgba(100,100,255,.28);
+    }
+    .brand small { display: block; color: var(--muted); font-size: 10px; letter-spacing: .12em; font-weight: 700; }
+    nav { display: flex; gap: 22px; color: var(--muted); font-size: 14px; }
+    nav a:hover, nav a:focus { color: white; }
+    .menu-btn { display: none; border: 1px solid var(--line); color: white; background: var(--panel); border-radius: 10px; padding: 8px 12px; }
+    .hero { padding: 64px 0 46px; }
+    .hero-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 34px; align-items: center; }
+    .eyebrow { display: inline-flex; gap: 8px; align-items: center; color: #c3c5ff; background: rgba(119,120,255,.12); border: 1px solid rgba(119,120,255,.28); padding: 7px 12px; border-radius: 99px; font-size: 12px; font-weight: 800; letter-spacing: .08em; }
+    h1 { font-size: clamp(2.45rem, 7vw, 4.5rem); line-height: 1.04; letter-spacing: -.055em; margin: 18px 0; }
+    .gradient { background: linear-gradient(90deg, #a6a7ff, #55e2d3); color: transparent; background-clip: text; -webkit-background-clip: text; }
+    .lead { max-width: 590px; color: var(--muted); font-size: 17px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+    .btn { display: inline-flex; justify-content: center; align-items: center; gap: 8px; border-radius: 12px; padding: 12px 17px; border: 1px solid var(--line); font-weight: 800; cursor: pointer; transition: transform .18s, border-color .18s; }
+    .btn:hover { transform: translateY(-2px); }
+    .primary { background: linear-gradient(135deg, #7778ff, #5759e8); border-color: transparent; color: white; }
+    .secondary { background: rgba(255,255,255,.03); color: var(--text); }
+    .hero-art { min-height: 300px; border: 1px solid var(--line); border-radius: 26px; padding: 22px; background: linear-gradient(145deg, rgba(119,120,255,.20), rgba(57,216,197,.06)), var(--panel); position: relative; overflow: hidden; }
+    .hero-art:before, .hero-art:after { content: ""; position: absolute; border-radius: 50%; filter: blur(2px); }
+    .hero-art:before { width: 220px; height: 220px; right: -50px; top: -60px; background: rgba(119,120,255,.25); }
+    .hero-art:after { width: 160px; height: 160px; left: -45px; bottom: -70px; background: rgba(57,216,197,.15); }
+    .art-content { position: relative; z-index: 1; height: 100%; min-height: 255px; display: flex; flex-direction: column; justify-content: space-between; }
+    .controller { font-size: clamp(5rem, 15vw, 8rem); text-align: center; filter: drop-shadow(0 14px 28px rgba(0,0,0,.25)); }
+    .art-tag { display: inline-block; width: fit-content; border: 1px solid var(--line); border-radius: 10px; padding: 7px 10px; background: rgba(8,12,25,.48); font-size: 12px; color: #d9ddff; }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 26px; }
+    .stat { background: rgba(255,255,255,.035); border: 1px solid var(--line); border-radius: 14px; padding: 13px; }
+    .stat strong { display: block; font-size: 18px; }
+    .stat span { color: var(--muted); font-size: 12px; }
+    section { padding: 36px 0; }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 16px; margin-bottom: 20px; }
+    h2 { margin: 0; font-size: clamp(1.55rem, 4vw, 2.1rem); letter-spacing: -.03em; }
+    .sub { color: var(--muted); margin: 6px 0 0; }
+    .search-row { display: flex; gap: 12px; margin: 20px 0; }
+    .search { width: 100%; background: var(--panel); color: white; border: 1px solid var(--line); border-radius: 12px; padding: 13px 15px; outline: none; }
+    .search:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(119,120,255,.15); }
+    .filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+    .filter { border: 1px solid var(--line); background: transparent; color: var(--muted); padding: 8px 12px; border-radius: 99px; cursor: pointer; font-size: 13px; }
+    .filter.active, .filter:hover { color: white; border-color: var(--accent); background: rgba(119,120,255,.15); }
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .card { overflow: hidden; border-radius: var(--radius); background: var(--panel); border: 1px solid var(--line); transition: transform .2s, border-color .2s; }
+    .card:hover { transform: translateY(-4px); border-color: rgba(119,120,255,.5); }
+    .thumb { min-height: 142px; display: grid; place-items: center; font-size: 52px; background: linear-gradient(135deg, rgba(119,120,255,.25), rgba(57,216,197,.10)); border-bottom: 1px solid var(--line); }
+    .thumb.space { background: linear-gradient(135deg, #15284c, #293c67); }
+    .thumb.mobile { background: linear-gradient(135deg, #35224f, #172c4a); }
+    .thumb.guide { background: linear-gradient(135deg, #173d42, #1c2846); }
+    .card-body { padding: 17px; }
+    .tag { color: #aeb0ff; font-size: 11px; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; }
+    h3 { margin: 7px 0; font-size: 18px; }
+    .card p { color: var(--muted); font-size: 14px; margin: 0 0 15px; }
+    .card .btn { width: 100%; padding: 10px; font-size: 13px; }
+    .empty { display: none; color: var(--muted); text-align: center; padding: 28px; border: 1px dashed var(--line); border-radius: 14px; }
+    .community { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 20px; background: linear-gradient(110deg, rgba(119,120,255,.16), rgba(57,216,197,.07)); border: 1px solid var(--line); border-radius: 22px; padding: 26px; }
+    footer { border-top: 1px solid var(--line); margin-top: 42px; padding: 24px 0 36px; color: var(--muted); font-size: 13px; }
+    .footer-row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+    .notice { color: #8793ad; font-size: 12px; margin-top: 12px; }
+    @media (max-width: 760px) {
+      .hero { padding-top: 38px; }
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-art { min-height: 260px; }
+      nav { display: none; position: absolute; top: 72px; left: 0; right: 0; padding: 18px 20px; background: #0b1020; border-bottom: 1px solid var(--line); flex-direction: column; gap: 14px; }
+      nav.open { display: flex; }
+      .menu-btn { display: inline-flex; }
+      .cards { grid-template-columns: 1fr; }
+      .thumb { min-height: 125px; }
+      .section-head { align-items: start; flex-direction: column; }
+      .community { grid-template-columns: 1fr; }
+      .stats { gap: 8px; }
+      .stat { padding: 10px; }
+      .stat strong { font-size: 16px; }
+      .stat span { font-size: 11px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap nav">
+      <a class="brand" href="#inicio" aria-label="Game Mod, inicio">
+        <span class="logo">🎮</span>
+        <span>GAME MOD<small>MODS · GAMING · COMUNIDAD</small></span>
+      </a>
+      <nav id="navLinks" aria-label="Navegación principal">
+        <a href="#mods">Mods</a><a href="#guias">Guías</a><a href="#novedades">Novedades</a><a href="#comunidad">Comunidad</a>
+      </nav>
+      <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="navLinks">☰ Menú</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="wrap hero-grid">
+        <div>
+          <span class="eyebrow">✦ TU CENTRO GAMER</span>
+          <h1>Lleva tus juegos<br>al <span class="gradient">siguiente nivel.</span></h1>
+          <p class="lead">Descubre mods, guías y novedades para personalizar tus videojuegos favoritos. Todo en un solo lugar, con una comunidad que comparte tu pasión.</p>
+          <div class="actions">
+            <a class="btn primary" href="#mods">Explorar contenido <span>↗</span></a>
+            <a class="btn secondary" href="#guias">Ver guías</a>
+          </div>
+          <div class="stats">
+            <div class="stat"><strong>Mods</strong><span>Contenido personalizado</span></div>
+            <div class="stat"><strong>Guías</strong><span>Consejos útiles</span></div>
+            <div class="stat"><strong>Gaming</strong><span>Para jugadores</span></div>
+          </div>
+        </div>
+        <div class="hero-art" aria-label="Ilustración decorativa de un mando de videojuegos">
+          <div class="art-content">
+            <span class="art-tag">NUEVO NIVEL DESBLOQUEADO</span>
+            <div class="controller" aria-hidden="true">🎮</div>
+            <span class="art-tag">MODS · TRUCOS · TUTORIALES</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="mods">
+      <div class="wrap">
+        <div class="section-head">
+          <div><h2>Explora el contenido</h2><p class="sub">Encuentra una categoría o busca por nombre.</p></div>
+        </div>
+        <div class="search-row">
+          <input class="search" id="searchInput" type="search" placeholder="🔎 Buscar mods, juegos o guías..." aria-label="Buscar contenido">
+        </div>
+        <div class="filters" aria-label="Filtrar contenido">
+          <button class="filter active" data-filter="todos">Todo</button>
+          <button class="filter" data-filter="mods">Mods</button>
+          <button class="filter" data-filter="movil">Móvil</button>
+          <button class="filter" data-filter="guias">Guías</button>
+        </div>
+        <div class="cards" id="contentCards">
+          <article class="card" data-category="mods movil" data-search="spaceflight simulator cohetes espacio mods">
+            <div class="thumb space" aria-hidden="true">🚀</div>
+            <div class="card-body">
+              <span class="tag">Mods · Móvil</span>
+              <h3>Mods espaciales</h3>
+              <p>Personaliza tu experiencia con contenido de cohetes y exploración espacial.</p>
+              <a class="btn secondary" href="#comunidad">Ver detalles</a>
+            </div>
+          </article>
+          <article class="card" data-category="mods" data-search="texturas gráficos mapas personalización">
+            <div class="thumb" aria-hidden="true">🧩</div>
+            <div class="card-body">
+              <span class="tag">Mods</span>
+              <h3>Personaliza tu juego</h3>
+              <p>Ideas para descubrir nuevas formas de jugar y personalizar tus títulos favoritos.</p>
+              <a class="btn secondary" href="#comunidad">Ver detalles</a>
+            </div>
+          </article>
+          <article class="card" data-category="guias movil" data-search="android instalación guía tutorial ayuda">
+            <div class="thumb mobile" aria-hidden="true">📱</div>
+            <div class="card-body">
+              <span class="tag">Guías · Android</span>
+              <h3>Instala mods en Android</h3>
+              <p>Aprende a revisar archivos, hacer copias de seguridad y seguir instrucciones de instalación.</p>
+              <a class="btn secondary" href="#guias">Leer guía</a>
+            </div>
+          </article>
+          <article class="card" data-category="guias" data-search="rendimiento configuración consejos fps">
+            <div class="thumb guide" aria-hidden="true">⚙️</div>
+            <div class="card-body">
+              <span class="tag">Guías</span>
+              <h3>Mejora el rendimiento</h3>
+              <p>Consejos básicos para ajustar los juegos a las capacidades de tu dispositivo.</p>
+              <a class="btn secondary" href="#guias">Leer guía</a>
+            </div>
+          </article>
+          <article class="card" data-category="mods" data-search="comunidad recomendaciones nuevos juegos">
+            <div class="thumb" aria-hidden="true">✨</div>
+            <div class="card-body">
+              <span class="tag">Selección</span>
+              <h3>Mods por descubrir</h3>
+              <p>Una sección preparada para añadir tus próximos mods favoritos.</p>
+              <a class="btn secondary" href="#comunidad">Próximamente</a>
+            </div>
+          </article>
+          <article class="card" data-category="guias movil" data-search="seguridad archivos descargas permisos">
+            <div class="thumb space" aria-hidden="true">🛡️</div>
+            <div class="card-body">
+              <span class="tag">Seguridad</span>
+              <h3>Descarga con cuidado</h3>
+              <p>Comprueba la fuente de los archivos y evita instaladores desconocidos o sospechosos.</p>
+              <a class="btn secondary" href="#guias">Ver consejos</a>
+            </div>
+          </article>
+        </div>
+        <p class="empty" id="emptyState">No se encontró contenido. Prueba otra palabra o categoría.</p>
+      </div>
+    </section>
+
+    <section id="guias">
+      <div class="wrap">
+        <div class="section-head"><div><h2>Guías rápidas</h2><p class="sub">Consejos sencillos para jugar y modificar con más seguridad.</p></div></div>
+        <div class="cards">
+          <article class="card"><div class="card-body"><span class="tag">Paso 01</span><h3>Comprueba compatibilidad</h3><p>Verifica la versión del juego, el dispositivo compatible y las instrucciones del creador del mod.</p></div></article>
+          <article class="card"><div class="card-body"><span class="tag">Paso 02</span><h3>Haz una copia de seguridad</h3><p>Guarda tus partidas y archivos originales antes de cambiar cualquier cosa.</p></div></article>
+          <article class="card"><div class="card-body"><span class="tag">Paso 03</span><h3>Usa fuentes confiables</h3><p>Lee comentarios y permisos. No compartas contraseñas ni instales archivos dudosos.</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="novedades">
+      <div class="wrap community">
+        <div><span class="tag">NOVEDADES</span><h2>Tu próxima aventura empieza aquí.</h2><p class="sub">Esta sección está lista para tus noticias, actualizaciones y nuevos mods.</p></div>
+        <a class="btn primary" href="#mods">Ver contenido ↗</a>
+      </div>
+    </section>
+
+    <section id="comunidad">
+      <div class="wrap community">
+        <div><span class="tag">COMUNIDAD GAME MOD</span><h2>¿Tienes un mod para compartir?</h2><p class="sub">Añade aquí tu enlace de comunidad, canal o formulario cuando lo tengas.</p></div>
+        <a class="btn secondary" href="mailto:hola@gamemod.example?subject=Contenido%20para%20Game%20Mod">Contactar por correo</a>
+      </div>
+      <div class="wrap notice">Nota: el correo de ejemplo no está configurado. Sustitúyelo por tu correo real antes de publicar.</div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-row">
+      <span>© <span id="year"></span> Game Mod. Hecho para jugadores.</span>
+      <span>Proyecto independiente de fans; no afiliado a marcas de videojuegos.</span>
+    </div>
+  </footer>
+
+  <script>
+    const searchInput = document.getElementById('searchInput');
+    const cards = [...document.querySelectorAll('#contentCards .card')];
+    const filters = [...document.querySelectorAll('.filter')];
+    const emptyState = document.getElementById('emptyState');
+    let activeFilter = 'todos';
+
+    function updateCards() {
+      const query = searchInput.value.trim().toLocaleLowerCase('es');
+      let visible = 0;
+      cards.forEach(card => {
+        const category = card.dataset.category || '';
+        const searchable = ((card.dataset.search || '') + ' ' + card.innerText).toLocaleLowerCase('es');
+        const matchesFilter = activeFilter === 'todos' || category.split(' ').includes(activeFilter);
+        const matchesSearch = searchable.includes(query);
+        const show = matchesFilter && matchesSearch;
+        card.style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+      emptyState.style.display = visible ? 'none' : 'block';
+    }
+    searchInput.addEventListener('input', updateCards);
+    filters.forEach(button => button.addEventListener('click', () => {
+      activeFilter = button.dataset.filter;
+      filters.forEach(item => item.classList.toggle('active', item === button));
+      updateCards();
+    }));
+
+    const menuBtn = document.getElementById('menuBtn');
+    const navLinks = document.getElementById('navLinks');
+    menuBtn.addEventListener('click', () => {
+      const open = navLinks.classList.toggle('open');
+      menuBtn.setAttribute('aria-expanded', String(open));
+    });
+    navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      menuBtn.setAttribute('aria-expanded', 'false');
+    }));
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
